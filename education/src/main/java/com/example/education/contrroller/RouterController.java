@@ -161,8 +161,10 @@ public class RouterController {
 
         System.out.println("检验验证码");
         String validationCode = request.getParameter("validation");
+        String codeInput = validationCode.toLowerCase();
         String validation = request.getSession().getAttribute("code").toString();
-        if (validationCode.equals(validation)) {
+        String codeOriginal = validation.toLowerCase();
+        if (codeInput.equals(codeOriginal)) {
             result.setCode("200");
         } else {
             result.setCode("400");
