@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * @author ASUS
  */
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 @Service
 public class UserService {
     @Autowired

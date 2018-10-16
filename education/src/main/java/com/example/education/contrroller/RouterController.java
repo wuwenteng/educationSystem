@@ -7,6 +7,7 @@ import com.example.education.service.UserService;
 import com.example.education.user.*;
 import com.example.education.util.VerificationCodeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -169,6 +170,28 @@ public class RouterController {
         } else {
             result.setCode("400");
             result.setMessage("验证码错误");
+        }
+        return result;
+    }
+
+    @GetMapping(value = "/haveLogin/changePassword")
+    @ResponseBody
+    public Result changePassword() {
+        Result result = new Result();
+        String newPassword = request.getParameter("newPassword");
+        String oldPassword = request.getParameter("oldPassword");
+        String username = request.getParameter("username");
+        String role = request.getParameter("role");
+        User user = userService.findByNameAndRole(username, role).get(0);
+        if (user.getPassword().equals(oldPassword)) {
+
+            user.setPassword(newPassword);
+            userService.updatePassword(user);
+            result.setCode("200");
+        } else {
+            System.out.println("原密码错误");
+            result.setCode("9");
+            result.setMessage("原密码错误");
         }
         return result;
     }
