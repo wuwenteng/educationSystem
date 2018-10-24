@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.awt.*;
 import java.util.List;
 
 /**
@@ -21,4 +22,9 @@ public interface UserRepository extends JpaRepository<User,Integer> {
     @Modifying
     @Query(value = "update User u set u.password = :password where u.username = :username")
     void update(@Param("username") String username, @Param("password") String password);
+
+    @Modifying
+    @Query(value = "update User u set u.imagePath = :imagePath where u.username = :username")
+    void updateImage(@Param("username") String username, @Param("imagePath") String imagePath);
+
 }

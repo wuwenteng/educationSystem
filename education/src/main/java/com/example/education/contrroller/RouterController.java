@@ -58,11 +58,9 @@ public class RouterController {
         Result result = new Result();
         String username = session.getAttribute("username").toString();
         String role = session.getAttribute("role").toString();
-        User user = new User();
+        User user = userService.findByNameAndRole(username,role).get(0);
         if ("teacher".equals(role)) {
             Teacher teacher = teacherService.select(username).get(0);
-            user.setUsername(username);
-            user.setRole(role);
             // 返回number,显示在个人信息一栏
             user.setPassword(teacher.getNumber());
             result.setUser(user);
@@ -70,8 +68,7 @@ public class RouterController {
             result.setCode("200");
         }else if ("student".equals(role)){
             Student student = studentService.select(username).get(0);
-            user.setUsername(username);
-            user.setRole(role);
+
             // 返回number,显示在个人信息一栏
             user.setPassword(student.getNumber());
             result.setUser(user);
@@ -79,8 +76,7 @@ public class RouterController {
             result.setCode("200");
         } else if ("manager".equals(role)) {
             Manager manager = managerService.selectByNum(username);
-            user.setUsername(username);
-            user.setRole(role);
+
             //返回number,显示在个人信息一栏
             user.setPassword(manager.getName());
             result.setUser(user);

@@ -1,10 +1,13 @@
 package com.example.education.service;
 
+import com.example.education.user.Result;
 import com.example.education.user.User;
 import com.example.education.repository.UserRepository;
+import org.apache.logging.log4j.message.StringFormattedMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -34,5 +37,9 @@ public class UserService {
 
     public void updatePassword(User user) {
         repository.update(user.getUsername(),user.getPassword());
+    }
+
+    public void updatePhoto(User user) {
+        repository.updateImage(user.getUsername(), user.getImagePath());
     }
 }
